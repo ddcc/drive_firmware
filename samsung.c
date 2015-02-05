@@ -50,8 +50,8 @@ uint8_t decode(uint8_t v) {
     }
   }
 
-  assert(v);
-  return 1;
+  assert(0);
+  return -1;
 }
 
 int main(int argc, char** argv) {
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
   int ret = 0;
 
   if (argc < 3) {
-    printf("Usage: %s <input> <output>!\n", argv[0]);
+    printf("Usage: %s <input> <output>\n", argv[0]);
     ret = -1;
     goto end;
   }
