@@ -23,7 +23,7 @@ uint8_t decode(uint8_t v) {
 }
 
 int main(int argc, char** argv) {
-  FILE *ip, *op;
+  FILE *ip = NULL, *op = NULL;
 
   uint8_t *buf;
   size_t i ,buf_size;
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
   if (!(ip = fopen(argv[1], "rb"))) {
     printf("Error: Cannot open %s!\n", argv[1]);
     ret = -1;
-    goto end_ip;
+    goto end;
   }
 
   fseek(ip, 0, SEEK_END);
@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
   if (!(op = fopen(argv[2], "wb"))) {
     printf("Error: Cannot open %s!\n", argv[2]);
     ret = -1;
-    goto end_op;
+    goto end_buf;
   }
 
   if (fwrite(buf, sizeof(*buf), buf_size / sizeof(*buf), op) != buf_size / sizeof(*buf)) {
@@ -74,13 +74,10 @@ int main(int argc, char** argv) {
     ret = -1;
   }
 
-end_op:
   fclose(op);
 
 end_buf:
   free(buf);
-
-end_ip:
   fclose(ip);
 
 end:
