@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
+
 
 // Samsung SSD Firmware Deobfuscation Tool
 // v0.1 - 2015/01/30
@@ -37,21 +39,22 @@ uint8_t dictionary[256] = {
   0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F
 };
 
+uint8_t inverse_dict[256] = { 0 };
+
+void create_inverse() {
+  size_t i;
+
+  for (i = 0; i < sizeof(dictionary) / sizeof(*dictionary); i++) {
+    inverse_dict[dictionary[i]] = (uint8_t)i;
+  }
+}
+
 uint8_t encode(uint8_t v) {
   return dictionary[v];
 }
 
 uint8_t decode(uint8_t v) {
-  size_t i;
-
-  for (i = 0; i < sizeof(dictionary) / sizeof(*dictionary); i++) {
-    if (dictionary[i] == v) {
-      return i;
-    }
-  }
-
-  assert(0);
-  return -1;
+  return inverse_dict[v];
 }
 
 int main(int argc, char** argv) {
@@ -91,6 +94,7 @@ int main(int argc, char** argv) {
     goto end_buf;
   }
 
+  create_inverse();
   for (i = 0; i < buf_size; i++) {
     buf[i] = decode(buf[i]);
   }
