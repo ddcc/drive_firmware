@@ -7,7 +7,7 @@
 
 // Samsung SSD Firmware Deobfuscation Tool
 // v0.2 - 2015/02/06
-// https://www.github.com/ddcc/samsung_ssd
+// https://www.github.com/ddcc/drive_firmware
 // GNU GPL v2 - see LICENSE.md
 
 uint8_t encode(uint8_t v) {
